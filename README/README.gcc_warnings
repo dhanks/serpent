@@ -1,0 +1,14 @@
+gcc -Wall -ggdb3 -pedantic -c -o admin.o admin.c
+In file included from /usr/include/sys/socket.h:34,
+                 from structs.h:18,
+                 from proto.h:16,
+                 from admin.c:21:
+/usr/include/socketbits.h:150: warning: ANSI C forbids zero-size array
+`__cmsg_data'
+
+This usually happens on Linux machines.  You shouldn't actually receive this
+warning at all.  Although -ansi isn't included in the Makefile, -pedantic
+is, and -pedantic checks odd things that are in -ansi.  The only way to
+really fix this problem is to copy the libraries into your local directory
+and modify the headers.  Some of you might wonder why I use -pedantic
+instead of -ansi:  I like to use the // comment notation.

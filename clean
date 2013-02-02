@@ -1,0 +1,3 @@
+#!/bin/sh
+rm -f `cat .defaults/files` .conf .conf.old
+

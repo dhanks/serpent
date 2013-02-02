@@ -1,0 +1,71 @@
+BINDIR 		= ../bin/
+CC 		= gcc
+PERMS 		= 0700
+LDFLAGS 	= -ggdb3 -lgdbm -g -ggdb -pedantic -lz -export-dynamic -ldl
+CFLAGS 		= -Wall -ggdb3 -pedantic
+OBJECTS 	=  buffer.o \
+		    funcs.o \
+		       io.o \
+		    login.o \
+		     main.o \
+		     misc.o \
+		   parser.o \
+		  players.o \
+		    rooms.o \
+		      set.o \
+		  signals.o \
+		   socket.o \
+		     stat.o \
+		     vars.o 
+
+serpent: $(OBJECTS)
+	$(CC) -o $(SERVER_BIN) $(OBJECTS) $(LDFLAGS)
+install:	serpent objects
+	@mv $(SERVER_BIN) $(BINDIR)/$(SERVER_BIN)
+	@echo "Moving binaries.."
+	@chmod $(PERMS) $(BINDIR)/$(SERVER_BIN)
+	@echo "Changing permission sets.."
+	@date > ../lib/files/compiled
+	@echo "Making time stamp.."
+	@echo "Finished"
+all: serpent objects install
+objects:
+	@echo Making command modules ..
+	@gcc -Wl,-export-dynamic,-shared -nostdlib -o $(SERVER_ROOT)/modules/modules/commands.so $(SERVER_ROOT)/modules/commands.c 
+clean:
+	@rm -f $(OBJECTS) $(BINDIR)$(SERVER_BIN) *~ $(SERVER_ROOT)$(SERVER_BIN) *.so $(SERVER_ROOT)/modules/modules/*.so
+	@echo "Done"
+archive: 	clean
+	@echo "Creating package serpent.tar.gz"
+	@( cd ../.. && tar -cf serpent.tar serpent/ && gzip -9f serpent.tar ) 2> /dev/null
+	@( cd ../.. && echo "`ls -l serpent.tar.gz`" )
+dist: 		archive
+	@( cd ../.. && ( mv serpent.tar.gz Serpent-$(VERSION)-src.tar.gz && echo "Made package for Serpent release $(VERSION)" ) || echo "Package creation failed!" ) 2> /dev/null
+misc.o: 	misc.c config.h flags.h proto.h structs.h
+	$(CC) $(CFLAGS) -c -o misc.o misc.c
+funcs.o: 	funcs.c config.h flags.h proto.h structs.h
+	$(CC) $(CFLAGS) -c -o funcs.o funcs.c
+login.o: 	login.c config.h flags.h proto.h structs.h
+	$(CC) $(CFLAGS) -c -o login.o login.c
+main.o: 	main.c config.h flags.h proto.h structs.h
+	$(CC) $(CFLAGS) -c -o main.o main.c
+parser.o: 	parser.c config.h flags.h proto.h structs.h
+	$(CC) $(CFLAGS) -c -o parser.o parser.c
+players.o: 	players.c config.h flags.h proto.h structs.h
+	$(CC) $(CFLAGS) -c -o players.o players.c
+rooms.o: 	rooms.c config.h flags.h proto.h structs.h
+	$(CC) $(CFLAGS) -c -o rooms.o rooms.c
+set.o: 		set.c config.h flags.h proto.h structs.h
+	$(CC) $(CFLAGS) -c -o set.o set.c
+signals.o: 	signals.c config.h flags.h proto.h structs.h
+	$(CC) $(CFLAGS) -c -o signals.o signals.c
+socket.o: 	socket.c config.h flags.h proto.h structs.h
+	$(CC) $(CFLAGS) -c -o socket.o socket.c
+stat.o: 	stat.c config.h flags.h proto.h structs.h
+	$(CC) $(CFLAGS) -c -o stat.o stat.c
+vars.o: 	vars.c config.h flags.h proto.h structs.h
+	$(CC) $(CFLAGS) -c -o vars.o vars.c
+io.o: 	io.c proto.h structs.h
+	$(CC) $(CFLAGS) -c -o io.o io.c
+buffer.o: 	buffer.c proto.h structs.h
+	$(CC) $(CFLAGS) -c -o buffer.o buffer.c

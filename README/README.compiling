@@ -1,0 +1,27 @@
+1. Edit the file 'config.h'.  You do not have to check out this file via
+   RCS, nor any other header files (simplicity).  The values that are common
+   to modify are: (important/required notated with **)
+   
+    **HIDDEN
+    **DUALPLEX
+    **HEALTHY
+    **RUNTIME_PATH
+    **CONFIG_PORT
+    **CONFIG_EMAIL
+      BANNER_CHAR
+      DUAL_PORT
+      VERSION
+      RELEASE
+      
+2. You know what to do.  Type 'make'.  Makefile options:
+    
+    make install - compiles objects, changes permissions, copies binaries,
+                   sets timestamp, and updates RCS notation.
+    make clean   - cleans up the compiling directory.  removes the following
+                   files: *~ serpent ../serpent *.c *.o
+    make dist    - cleans up the compiling directory, automatically creates
+                   an archive in your account's home directory with the
+		   following syntax: Serpent-$(VERSION)-src.tar.gz
+   
+   *NOTE         - make install automatically cleans, moves, sets permissions,
+                   and removes source files from the compiling directory.

@@ -1,0 +1,7 @@
+The files contained in this directory are:
+
+README.compiling      - brief overview of how to compile the source code
+README.copyright      - copyright notices and agreements
+README.gcc_warnings   - some common gcc warnings
+README.rcs            - crash course on how to use RCS and modify the source
+                        code

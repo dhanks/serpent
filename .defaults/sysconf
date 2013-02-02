@@ -1,0 +1,5 @@
+#!/bin/sh
+#
+STACK_SIZE="10000"
+SERVER_BIN="serpent"
+SERVER_PORT="2010"

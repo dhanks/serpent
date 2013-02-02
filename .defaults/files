@@ -1,0 +1,7 @@
+.defaults/userconf
+.defaults/userconf.old
+bin/boot
+bin/close_down
+src/setup.h
+src/Makefile
+

@@ -1,0 +1,15 @@
+Some random thoughts and design for the FIFO paradigm.
+
+Client -> TCP/IP -> Network Server -> FIFO -> Server \
+Client <- TCP/IP <- Network Server <- FIFO <---------'
+
+"-->" representing data being transmitted.  Data is in the following format:
+
+struct {
+   int   fd;        /* file descriptor to write/read from               */
+   int   flag;      /* flag of the data being sent (CLOSE/SEND/RECEIVE) */
+   char *data;      /* The data itself                                  */
+   char  name[40];  /* Name of the player (for reboots)                 */
+} pkt_data;
+
+

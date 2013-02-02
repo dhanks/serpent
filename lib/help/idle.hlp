@@ -1,0 +1,3 @@
+This command allows you to see the idle times of each user.  To use it for a
+specific user, use the user's name as an arguement, otherwise, it will list
+everyone connected.

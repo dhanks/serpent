@@ -1,0 +1,83 @@
+Source Code Control - Revision Control System
+---------------------------------------------
+
+Apart from EWtoo,  I use the RCS notation system for keeping up with my
+source files and projects.  Overall it keeps things in a nice fashion and
+format that is easy to read.  
+
+Anyone wanting to modify my source code will have to learn how to use RCS
+notation.  I will breifly give a crash course in how to check-in, check-out 
+files, and give proper update logs.
+
+The RCS system comprises a number of commands for managing source files.  It
+works by tracking a source file as it's changed by maintaining a single file
+with a list of changes in sufficient detail to recreate any previous
+version.  It also allows you to store comments assoicated with every change,
+which can be very useful if you're looking back through the history of
+changes to a file. (Wrox, Linux Programming: 296)
+
+1. What does checking-in and checking-out files mean?
+   
+     Checking-in and checking-out files are the processes in which you
+     parse the file through the RCS notation system.
+     
+2. How do I modify a file?
+   
+    You must first check out the appropiate file you wish to modify.  Do
+    so by simply typing 'co -l filename.c'  The command itself 'co' stands
+    for check-out; the argument -l locks the file for modification, and,
+    of course, filename.c is the file you wish to edit.
+    
+    Then you just edit the file like you regurlarly would.  Use JED, PICO,
+    JOE, even VI.  After modification of the file, you need to re-register
+    the file, or when you compile, the changes will NOT be saved.  To do this
+    simply type 'ci filename.c'.  This simply removes the filename.c and
+    parses it through the RCS notation and saves the file as filename.c,v.
+    
+    Here is an example of how to edit a file:
+   
+      [root@localhost src]# co -l rooms.c
+      rooms.c,v  -->  rooms.c
+      revision 1.1 (locked)
+      done
+      [root@localhost src]#
+
+      ** Perform modification and save file -- i.e. 'jed rooms.c' **
+
+      [root@localhost src]# ci rooms.c
+      rooms.c,v  <--  rooms.c
+      new revision: 1.2; previous revision: 1.1
+      enter log message, terminated with single '.' or end of file:
+      >> Fixed spacing and formatting.  Just practicing with RCS
+      >> .
+      done
+      [root@localhost src]# 
+
+3. Ok. I'm starting to understand.  Now how do I view the history of a 
+   source file?
+   
+     Good question.  It's simple: 'rlog filename.c'
+     Here is an example:
+
+[root@localhost src]# rlog rooms.c
+
+RCS file: rooms.c,v
+Working file: rooms.c
+head: 1.2
+branch:
+locks: strict
+access list:
+symbolic names:
+keyword substitution: kv
+total revisions: 2;     selected revisions: 2
+description:
+----------------------------
+revision 1.2
+date: 1998/04/11 19:07:33;  author: root;  state: Exp;  lines: +0 -1
+Fixed spacing and formatting.  Just practicing with RCS
+----------------------------
+revision 1.1
+date: 1998/04/11 17:39:48;  author: root;  state: Exp;
+Initial revision
+=============================================================================
+[root@localhost src]#
